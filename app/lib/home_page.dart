@@ -4,52 +4,58 @@ class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  ///Primer RECTANGULO AZUL gradiante///
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: SizedBox(height: 350, child:_head()), 
+            ),
+            SliverToBoxAdapter(
+              child: 
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                    'Historial de transacciones',
+                     style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                   Text(
+                    'Ver todo',
+                     style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: const Color.fromARGB(255, 16, 36, 216),
+                    ),
+                   ),
+                  ],
+                ),
+              ),
+            ),
+            SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+              return ListTile(leading: ClipRRect(borderRadius: BorderRadius.circular(5), 
+              child: Image.asset('assets/money_image.png'), 
+              )
+              );
+            },))
+          ],
+        )
+      ),
+    );
+  }
+  Widget _head(){
+    return Stack(
           children: [
-            Positioned(
-              top: 2, 
-              left: 0,
-              right: 0,
-              child: Container(
-                width: double.infinity,
-                height: 240,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomLeft,
-                    stops: [0.0, 0.2, 0.4, 0.9],
-                    colors: [
-                      Color.fromARGB(255, 130, 229, 152),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                ),
-              ),
-            ),
-
-            // Círculo blanco dentro del primer rectángulo azul
-            Positioned(
-              top: 50,
-              left: 50,
-              child: Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 224, 129, 129),
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
-
             Column(
               children: [
+                /// Fondo Azul///
                 Container(
                   width: double.infinity,
                   height: 240,
@@ -71,58 +77,217 @@ class HomePage extends StatelessWidget {
                       bottomRight: Radius.circular(20),
                     ),
                   ),
+                  child: Stack(
+                    children: [
+                      // Notificación dentro del primer widget
+                      Positioned(
+                        top: 10, 
+                        right: 20,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: Container(
+                            height: 30,
+                            width: 30,
+                            color: Color.fromRGBO(21, 129, 252, 0.443),
+                            child: Icon(
+                              Icons.notification_add_outlined,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-
+            ///TEXTO DE BIENVENIDA///  
             Positioned(
-              top: 15,
-              left: 10,
-              child: Column(
-                children: [
-                  Text(
-                    "Buenos días",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 30,
-                      color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 35, left: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Buenos días",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
+                    Text(
+                      "Luis Illescas",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-
-            ///SEGUNDO RECTANGULO AZUL FUERTE///
+            /// TARJETA AZUL
             Positioned(
-              top: 160,
-              left: 37,
+              top: 130,
+              left: 50,
               child: Container(
-                height: 230,
-                width: 370,
+                height: 210,
+                width: 350,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 14, 35, 105),
-                  borderRadius: BorderRadius.circular(20),
+                  gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomLeft,
+                      stops: [0.0, 0.2, 0.4, 0.9],
+                      colors: [
+                        Color.fromARGB(255, 32, 128, 255),
+                        Color.fromARGB(255, 24, 63, 189),
+                        Color.fromARGB(255, 22, 52, 151),
+                        Color.fromARGB(255, 38, 20, 126),
+                      ],
+                    ),
+                     borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
                   boxShadow: [
                     BoxShadow(
                       color: Color.fromARGB(255, 143, 173, 238),
                       blurRadius: 2.0,
-                      offset: Offset(0,10)
+                      offset: Offset(0, 10),
                     ),
                     BoxShadow(
                       color: Color.fromARGB(255, 11, 27, 78),
-                      offset: Offset(-3, 0)
+                      offset: Offset(-3, 0),
                     ),
                     BoxShadow(
                       color: Color.fromARGB(255, 8, 19, 54),
-                      offset: Offset(3, 0)
+                      offset: Offset(3, 0),
                     ),
-                  ]
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Balance total',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: Colors.white
+                            ),
+                            ),
+                            Icon(
+                              Icons.more_horiz,
+                              color: Colors.white,
+                            )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 7,),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: Row(
+                        children: [
+                          Text(
+                            '\$ 5,850',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                              color: Colors.white,
+                            ),)
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 25),
+                      Padding(padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 12,
+                                backgroundColor: Color.fromRGBO(102, 145, 194, 1),
+                                child: Icon(
+                                  Icons.arrow_downward, color: 
+                                  Colors.white,
+                                  size: 19,), 
+                              ),
+                              SizedBox(width: 7),
+                              Text(
+                                'Ingresos',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255,216,216,216),
+                                ),
+                                )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 12,
+                                backgroundColor: Color.fromRGBO(102, 145, 194, 1),
+                                child: Icon(
+                                  Icons.arrow_upward, color: 
+                                  Colors.white,
+                                  size: 18,), 
+                              ),
+                              SizedBox(width: 7),
+                              Text(
+                                'Gastos',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                  color: Color.fromARGB(255,216,216,216),
+                                ),
+                                )
+                            ],
+                          ),
+                        ],
+                      ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '\$1200',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                             '\$600',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                color: Colors.white,
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                  ],
                 ),
               ),
             ),
           ],
-        ),
-      ),
-    );
+        );
+
   }
+  
 }
