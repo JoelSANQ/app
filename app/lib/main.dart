@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app/Screens/stadistics.dart';
+import 'package:app/Screens/home_page.dart';
 
 void main() {
   runApp(const App());
