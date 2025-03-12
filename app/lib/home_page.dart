@@ -1,4 +1,6 @@
+import 'package:app/data/listdata.dart';
 import 'package:flutter/material.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -41,10 +43,34 @@ class HomePage extends StatelessWidget {
             ),
             SliverList(delegate: SliverChildBuilderDelegate((context, index) {
               return ListTile(leading: ClipRRect(borderRadius: BorderRadius.circular(5), 
-              child: Image.asset('assets/money_image.png'), 
+              child: Image.asset('assets/${geter()[index].image!}', height: 40,), 
+              ),
+              title: Text(
+                geter()[index].name!,
+              style: TextStyle(
+                fontSize: 17,
+                fontWeight: FontWeight.w600
+              ),
+              ),
+              subtitle:Text(
+                geter()[index].time!,
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ) ,
+              trailing: Text(
+                geter()[index].fee!, 
+                style:  TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 19,
+                color: Colors.green,
               )
+              ),
               );
-            },))
+            },
+            childCount: geter().length,
+            )
+            )
           ],
         )
       ),
