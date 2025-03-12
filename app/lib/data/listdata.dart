@@ -2,9 +2,30 @@ import 'package:app/data/1.dart';
 
 List<money> geter(){
   money upwork = money();
-  upwork.name = 'pollo brujo';
+  upwork.name = 'Pollo Brujo';
   upwork.fee = '350';
-  upwork.time = 'hoy';
-  upwork.image = 'money_image.png';
- return [upwork];
+  upwork.time = 'Hoy';
+  upwork.image = 'rest.png';
+  upwork.buy = true;
+  money tecdesoft = money();
+  tecdesoft.name = 'Tecnologico De Software';
+  tecdesoft.fee = '4200';
+  tecdesoft.time = 'Ayer';
+  tecdesoft.image ='Logotipo_Primario_Vertical.png';
+  tecdesoft.buy = true;
+  money transferencia = money();
+  transferencia .buy = false;
+  transferencia .fee = '200';
+  transferencia .image ='money_image.png';
+  transferencia .name = 'Transferencia de las pipzas Joaquin';
+  transferencia .time = 'Marzo 1, 2025';
+  money Ps_Store = money();
+  Ps_Store.name = 'God Of War Ragnarok';
+  Ps_Store.fee = '700';
+  Ps_Store.time = 'Diciembre 24, 2025';
+  Ps_Store.image = 'psn.png';
+  Ps_Store.buy = true;
+
+
+ return [upwork, tecdesoft, transferencia, Ps_Store];
 }
