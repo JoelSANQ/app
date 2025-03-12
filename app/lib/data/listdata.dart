@@ -17,7 +17,7 @@ List<money> geter(){
   transferencia .buy = false;
   transferencia .fee = '200';
   transferencia .image ='money_image.png';
-  transferencia .name = 'Transferencia de las pipzas Joaquin';
+  transferencia .name = 'Caliente MX Deposito carrera de perros';
   transferencia .time = 'Marzo 1, 2025';
   money Ps_Store = money();
   Ps_Store.name = 'God Of War Ragnarok';
