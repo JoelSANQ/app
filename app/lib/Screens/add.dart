@@ -8,13 +8,14 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
-  String? selctedItem;
+  String? selectedItem;  
+  final TextEditingController expalin_C = TextEditingController();
   final List<String> _item = [
-    'Food',
-    'Transfer',
-    'Transportation',
-    'Education'
-  ]; // ← Punto y coma corregido aquí
+    'food',
+    'transfer',
+    'Enterteinment',
+    'Education',
+  ]; 
 
   @override
   Widget build(BuildContext context) {
@@ -46,41 +47,87 @@ class _AddState extends State<Add> {
       child: Column(
         children: [
           const SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Container(
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  width: 2,
-                  color: const Color(0xffc5c5c5),
-                ),
+          name(),
+          SizedBox(height: 50),
+          TextField(
+            controller: expalin_C,
+            decoration: InputDecoration(
+              constraints: BoxConstraints(
+                minHeight: 40,
               ),
-              child: DropdownButton<String>(
-                items: _item
-                    .map((e) => DropdownMenuItem(
-                          child: Container(), 
-                          value: e,
-                        ))
-                    .toList(), 
-                    hint: Text(
-                      'Name' ,
-                      style: TextStyle(color: Colors.grey),
-                      ),
-                   
-            dropdownColor: Colors.white,
-            isExpanded: true,
-            underline: Container(),
-                onChanged: (value) {
-                  setState(() {
-                    selctedItem = value!;
-                  });
-                },
-              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), labelText: 'Motivo',
+              labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),borderSide: BorderSide(width: 20) )
             ),
-          ),
+          )
         ],
+      ),
+    );
+  }
+
+  Padding name() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        width: 300,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            width: 2,
+            color: const Color(0xffc5c5c5),
+          ),
+        ),
+        child: DropdownButton<String>(
+          value: selectedItem,
+          onChanged: (value) {
+            setState(() {
+              selectedItem = value!;
+            });
+          },
+          items: _item
+              .map((e) => DropdownMenuItem(
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            child: Image.asset('assets/${e}.png'),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(e, style: TextStyle(fontSize: 18),)
+                        ],
+                      ),
+                    ), 
+                    value: e,
+                  ))
+              .toList(),
+          selectedItemBuilder: (context) {
+            return _item.map((e) => Row(
+              children: [
+                Container(
+                  width: 42,
+                  child: Image.asset('assets/${e}.png'),
+                ), 
+                SizedBox(width: 10),
+                Text(
+                  e,
+                  style: TextStyle(fontSize: 18),
+                )
+              ],
+            )).toList(); 
+          },
+          hint: Text(
+            'Name' ,
+            style: TextStyle(color: Colors.grey),
+          ),
+          dropdownColor: Colors.white,
+          isExpanded: true,
+          underline: Container(),
+        ),
       ),
     );
   }
