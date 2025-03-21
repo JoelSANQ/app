@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app/Screens/stadistics.dart';
-import 'package:app/Screens/home_page.dart';
+import 'package:app/widget/Bottom.dart';
 
 void main() {
   runApp(const App());
@@ -14,7 +13,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Stadistics(),
+      home: Bottom(),
     );
   }
   

@@ -1,5 +1,6 @@
 import 'package:app/widget/chart.dart';
 import 'package:flutter/material.dart';
+import 'package:app/data/listdata.dart';
 
 class Stadistics extends StatefulWidget {
   const Stadistics({Key? key}) : super(key: key);
@@ -109,10 +110,55 @@ class _StadisticsState extends State<Stadistics> {
                   ),
                   SizedBox(height: 20),
                   Chart(),
-                  SizedBox(height: 20)
+                  SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15 ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [Text('Lo mas gastado', style: TextStyle(
+                        color: Colors.grey,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold)
+                              ,),
+                              Icon(Icons.swap_vert, size: 25, color: Colors.grey,
+                              )
+                              ],
+                    ),
+                  )
                 ],
               ),
             ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+              return ListTile(
+                leading: Image.asset('assets/${geter()[index].image ?? ''}',
+                height: 40,), // Asegúrate de manejar los null
+                title: Text(
+                  geter()[index].time!,
+                   style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                   ),
+                   ),
+                   subtitle: Text(
+                  geter()[index].name!,
+                   style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                   ),
+                   ), 
+                   trailing: Text(
+                  geter()[index].fee!,
+                   style: TextStyle(
+                    fontSize: 19,
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                   ),
+                   ),
+              );
+            },
+            childCount: geter().length,
+            ))
           ],
         ),
       ),
