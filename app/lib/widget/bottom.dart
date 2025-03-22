@@ -4,7 +4,7 @@ import 'package:app/Screens/stadistics.dart';
 import 'package:flutter/material.dart';
 
 class Bottom extends StatefulWidget {
-  const Bottom({Key? key}) : super(key: key);
+  const Bottom({super.key});
 
   @override
   State<Bottom> createState() => _BottomState();
@@ -21,8 +21,8 @@ class _BottomState extends State<Bottom> {
         onPressed: (){
           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Add()));
         },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.blue,),
+        backgroundColor: Colors.blue,
+        child: Icon(Icons.add),),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),

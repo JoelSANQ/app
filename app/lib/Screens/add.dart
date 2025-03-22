@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Add extends StatefulWidget {
-  const Add({Key? key}) : super(key: key);
+  const Add({super.key});
 
   @override
   State<Add> createState() => _AddState();
@@ -9,15 +9,26 @@ class Add extends StatefulWidget {
 
 class _AddState extends State<Add> {
   String? selectedItem;  
-  final TextEditingController expalin_C = TextEditingController();
+  final TextEditingController explainC = TextEditingController();
+  final TextEditingController amountC = TextEditingController();
+  final TextEditingController dateC = TextEditingController();
+  FocusNode ex = FocusNode();
+
   final List<String> _item = [
     'food',
     'transfer',
-    'Enterteinment',
+    'Entertainment',
     'Education',
   ]; 
 
   @override
+  void initState() {
+    super.initState();
+    ex.addListener(() {
+      setState(() {});
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -25,10 +36,10 @@ class _AddState extends State<Add> {
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            background_container(context),
+            backgroundContainer(context),
             Positioned(
               top: 120,
-              child: Main_Container(),
+              child: mainContainer(),
             ),
           ],
         ),
@@ -36,31 +47,26 @@ class _AddState extends State<Add> {
     );
   }
 
-  Container Main_Container() {
+  Container mainContainer() {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.white,
       ),
-      height: 550,
+      height: 650, 
       width: 340,
       child: Column(
         children: [
           const SizedBox(height: 50),
           name(),
-          SizedBox(height: 50),
-          TextField(
-            controller: expalin_C,
-            decoration: InputDecoration(
-              constraints: BoxConstraints(
-                minHeight: 40,
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), labelText: 'Motivo',
-              labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),borderSide: BorderSide(width: 20) )
-            ),
-          )
+          const SizedBox(height: 20),
+          amount(),
+          const SizedBox(height: 20),
+          motive(),
+          const SizedBox(height: 20),
+          datePicker(),
+          const SizedBox(height: 30),
+          saveButton(),
         ],
       ),
     );
@@ -86,44 +92,26 @@ class _AddState extends State<Add> {
               selectedItem = value!;
             });
           },
-          items: _item
-              .map((e) => DropdownMenuItem(
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            child: Image.asset('assets/${e}.png'),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(e, style: TextStyle(fontSize: 18),)
-                        ],
-                      ),
-                    ), 
-                    value: e,
-                  ))
-              .toList(),
+          items: _item.map((e) => DropdownMenuItem(
+            value: e,
+            child: Row(
+              children: [
+                SizedBox(width: 40, child: Image.asset('assets/${e}.png')),
+                const SizedBox(width: 10),
+                Text(e, style: TextStyle(fontSize: 18))
+              ],
+            ),
+          )).toList(),
           selectedItemBuilder: (context) {
             return _item.map((e) => Row(
               children: [
-                Container(
-                  width: 42,
-                  child: Image.asset('assets/${e}.png'),
-                ), 
-                SizedBox(width: 10),
-                Text(
-                  e,
-                  style: TextStyle(fontSize: 18),
-                )
+                SizedBox(width: 42, child: Image.asset('assets/$e.png')),
+                const SizedBox(width: 10),
+                Text(e, style: TextStyle(fontSize: 18))
               ],
             )).toList(); 
           },
-          hint: Text(
-            'Name' ,
-            style: TextStyle(color: Colors.grey),
-          ),
+          hint: Text('Name', style: TextStyle(color: Colors.grey)),
           dropdownColor: Colors.white,
           isExpanded: true,
           underline: Container(),
@@ -132,7 +120,122 @@ class _AddState extends State<Add> {
     );
   }
 
-  Column background_container(BuildContext context) {
+  Padding amount() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: SizedBox(
+        width: 300,
+        child: TextField(
+          controller: amountC,
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            labelText: 'Monto',
+            labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(width: 2, color: Color(0xffC5C5C5)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(width: 2, color: Color(0xff368983)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding motive() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: SizedBox(
+        width: 300,
+        child: TextField(
+          focusNode: ex,
+          controller: explainC,
+          decoration: InputDecoration(
+            labelText: 'Motivo',
+            labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10), 
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(width: 2, color: Color(0xffC5C5C5)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(width: 2, color: Color(0xff368983)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Padding datePicker() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: SizedBox(
+        width: 300,
+        child: TextField(
+          controller: dateC,
+          readOnly: true,
+          decoration: InputDecoration(
+            labelText: 'Fecha',
+            labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+            suffixIcon: Icon(Icons.calendar_today, color: Colors.grey.shade600),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+              borderSide: const BorderSide(width: 2, color: Color(0xffC5C5C5)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(width: 2, color: Color(0xff368983)),
+            ),
+          ),
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2100),
+            );
+
+            if (pickedDate != null) {
+              setState(() {
+                dateC.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+              });
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  ElevatedButton saveButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xff368983),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+      ),
+      onPressed: () {
+        print("Categoría: $selectedItem");
+        print("Monto: ${amountC.text}");
+        print("Motivo: ${explainC.text}");
+        print("Fecha: ${dateC.text}");
+      },
+      child: const Text(
+        'Guardar',
+        style: TextStyle(fontSize: 18, color: Colors.white),
+      ),
+    );
+  }
+
+  Column backgroundContainer(BuildContext context) {
     return Column(
       children: [
         Container(
@@ -142,50 +245,12 @@ class _AddState extends State<Add> {
             gradient: const LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomLeft,
-              stops: [0.0, 0.2, 0.4, 0.9],
-              colors: [
-                Color.fromARGB(255, 32, 128, 255),
-                Color.fromARGB(255, 24, 63, 189),
-                Color.fromARGB(255, 22, 52, 151),
-                Color.fromARGB(255, 38, 20, 126),
-              ],
+              colors: [Colors.blue, Colors.blueAccent],
             ),
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),
             ),
-          ),
-          child: Column(
-            children: [
-              const SizedBox(height: 40),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: const Icon(Icons.arrow_back, color: Colors.white),
-                    ),
-                    const Text(
-                      'Añadir',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.attach_file_outlined,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
-            ],
           ),
         ),
       ],

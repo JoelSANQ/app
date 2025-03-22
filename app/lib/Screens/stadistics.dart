@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/data/listdata.dart';
 
 class Stadistics extends StatefulWidget {
-  const Stadistics({Key? key}) : super(key: key);
+  const Stadistics({super.key});
 
   @override
   State<Stadistics> createState() => _StadisticsState();
@@ -11,6 +11,7 @@ class Stadistics extends StatefulWidget {
 
 class _StadisticsState extends State<Stadistics> {
   List<String> day = ['Día', 'Semana', 'Mes', 'Año'];
+  // ignore: non_constant_identifier_names
   int index_color = 0;
 
   @override
