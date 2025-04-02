@@ -1,7 +1,13 @@
+import 'package:app/data/add_date.dart';
 import 'package:flutter/material.dart';
 import 'package:app/widget/Bottom.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
+
+void main() async{
+  await Hive.initFlutter();
+  Hive.registerAdapter(AdddataAdapter());
+  await Hive.openBox<Add_data>('data');
   runApp(const App());
 }
 
