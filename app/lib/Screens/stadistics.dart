@@ -15,13 +15,10 @@ ValueNotifier kj = ValueNotifier(0);
 
 class _StadisticsState extends State<Stadistics> {
   List<String> day = ['Día', 'Semana', 'Mes', 'Año'];
-<<<<<<< HEAD
-  // ignore: non_constant_identifier_names
-=======
-  List  f =  [today(), week(), month(), year()];
-   List<Add_data> a = [];
->>>>>>> editar
   int index_color = 0;
+   List<Add_data> a = [];
+  
+
 
   @override
   Widget build(BuildContext context) {

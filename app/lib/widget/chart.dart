@@ -4,12 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class Chart extends StatefulWidget {
-<<<<<<< HEAD
   const Chart({super.key});
-=======
-  int indexx;
-  Chart({Key? key, required this.indexx}) : super(key: key);
->>>>>>> editar
 
   @override
   State<Chart> createState() => _ChartState();
@@ -21,34 +16,7 @@ class _ChartState extends State<Chart> {
   bool j = true;
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return SizedBox(
-=======
-    switch (widget.indexx) {
-      case 0:
-        a = today();
-        b = true;
-        j = true;
-        break;
-      case 1:
-        a = week();
-        b = false;
-        j = true;
-        break;
-      case 2:
-        a = month();
-        b = false;
-        j = true;
-        break;
-      case 3:
-        a = year();
-
-        j = false;
-        break;
-      default:
-    }
-    return Container(
->>>>>>> editar
       width: double.infinity,
       height: 300,
       child: SfCartesianChart(
