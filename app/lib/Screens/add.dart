@@ -1,4 +1,7 @@
+import 'package:app/data/add_date.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class Add extends StatefulWidget {
   const Add({super.key});
@@ -8,12 +11,10 @@ class Add extends StatefulWidget {
 }
 
 class _AddState extends State<Add> {
+  final box = Hive.box<Add_data> ('data');
+  DateTime date = DateTime.now();
   String? selectedItem;  
-  final TextEditingController explainC = TextEditingController();
-  final TextEditingController amountC = TextEditingController();
-  final TextEditingController dateC = TextEditingController();
-  FocusNode ex = FocusNode();
-
+  final TextEditingController expalin_C = TextEditingController();
   final List<String> _item = [
     'food',
     'transfer',
@@ -21,14 +22,12 @@ class _AddState extends State<Add> {
     'Education',
   ]; 
 
+  final List<String> _itemei = [
+    'Ingreso',
+    "Gasto",
+  ]; 
+  
   @override
-  void initState() {
-    super.initState();
-    ex.addListener(() {
-      setState(() {});
-    });
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
@@ -51,22 +50,37 @@ class _AddState extends State<Add> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Colors.white,
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+                      end: Alignment.bottomLeft,
+                      stops: [0.0, 0.2, 0.4, 0.9],
+              colors: [
+                        Color.fromARGB(255, 32, 128, 255),
+                        Color.fromARGB(255, 24, 63, 189),
+                        Color.fromARGB(255, 22, 52, 151),
+                        Color.fromARGB(255, 38, 20, 126),
+                      ],        
+          ),
       ),
-      height: 650, 
+      height: 550,
       width: 340,
       child: Column(
         children: [
           const SizedBox(height: 50),
           name(),
-          const SizedBox(height: 20),
-          amount(),
-          const SizedBox(height: 20),
-          motive(),
-          const SizedBox(height: 20),
-          datePicker(),
-          const SizedBox(height: 30),
-          saveButton(),
+          SizedBox(height: 50),
+          TextField(
+            controller: expalin_C,
+            decoration: InputDecoration(
+              constraints: BoxConstraints(
+                minHeight: 40,
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10), labelText: 'Motivo',
+              labelStyle: TextStyle(fontSize: 17, color: Colors.grey.shade500),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),borderSide: BorderSide(width: 20) )
+            ),
+          )
         ],
       ),
     );
@@ -92,29 +106,90 @@ class _AddState extends State<Add> {
               selectedItem = value!;
             });
           },
-          items: _item.map((e) => DropdownMenuItem(
-            value: e,
-            child: Row(
-              children: [
-                SizedBox(width: 40, child: Image.asset('assets/${e}.png')),
-                const SizedBox(width: 10),
-                Text(e, style: TextStyle(fontSize: 18))
-              ],
-            ),
-          )).toList(),
+          items: _item
+              .map((e) => DropdownMenuItem(
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            child: Image.asset('assets/${e}.png'),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(e, style: TextStyle(fontSize: 18),)
+                        ],
+                      ),
+                    ), 
+                    value: e,
+                  ))
+              .toList(),
           selectedItemBuilder: (context) {
             return _item.map((e) => Row(
               children: [
-                SizedBox(width: 42, child: Image.asset('assets/$e.png')),
-                const SizedBox(width: 10),
-                Text(e, style: TextStyle(fontSize: 18))
+                Container(
+                  width: 42,
+                  child: Image.asset('assets/${e}.png'),
+                ), 
+                SizedBox(width: 10),
+                Text(
+                  e,
+                  style: TextStyle(fontSize: 18),
+                )
               ],
             )).toList(); 
           },
-          hint: Text('Name', style: TextStyle(color: Colors.grey)),
+          hint: Text(
+            'Name' ,
+            style: TextStyle(color: Colors.grey),
+          ),
           dropdownColor: Colors.white,
           isExpanded: true,
           underline: Container(),
+        ),
+      ),
+    );
+  }
+
+  // This is the new date picker
+  Padding date_picker() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: GestureDetector(
+        onTap: () async {
+          final DateTime? picked = await showDatePicker(
+            context: context,
+            initialDate: date,
+            firstDate: DateTime(2000),
+            lastDate: DateTime(2101),
+          );
+          if (picked != null && picked != date) {
+            setState(() {
+              date = picked;
+            });
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          width: 300,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              width: 2,
+              color: const Color(0xffc5c5c5),
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(Icons.calendar_today),
+              SizedBox(width: 10),
+              Text(
+                "${date.toLocal()}".split(' ')[0],
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );
